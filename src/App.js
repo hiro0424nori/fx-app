@@ -85,38 +85,112 @@ const App = () => {
     setError('');
   };
 
-  return (
-    <div style={{ padding: 20, fontFamily: 'sans-serif' }}>
-      <h2>FX PR比計算ツール</h2>
+  const clearInputs = () => {
+    setEntryPrice('');
+    setStopLoss(null);
+    setTakeProfit(null);
+    setError('');
+  };
 
-      <div>
+  return (
+    <div style={{ padding: 20, fontFamily: 'sans-serif', backgroundColor: '#f0f8ff' }}>
+      <h2 style={{ textAlign: 'center', color: '#333' }}>FX PR比計算ツール</h2>
+
+      <div style={{ marginBottom: 10 }}>
         <label>通貨ペア：</label>
-        <select value={currencyPair} onChange={(e) => setCurrencyPair(e.target.value)}>
+        <select 
+          value={currencyPair} 
+          onChange={(e) => setCurrencyPair(e.target.value)} 
+          style={{ padding: '8px', fontSize: '16px', borderRadius: '10px' }}
+        >
           {currencyPairs.map((pair) => (
             <option key={pair} value={pair}>{pair}</option>
           ))}
         </select>
       </div>
 
-      <div>
+      <div style={{ marginBottom: 10 }}>
         <label>方向：</label>
-        <select value={direction} onChange={(e) => setDirection(e.target.value)}>
+        <select 
+          value={direction} 
+          onChange={(e) => setDirection(e.target.value)} 
+          style={{ padding: '8px', fontSize: '16px', borderRadius: '10px' }}
+        >
           <option value="long">ロング（買い）</option>
           <option value="short">ショート（売り）</option>
         </select>
       </div>
 
-      <div>
+      <div style={{ marginBottom: 10 }}>
         <label>エントリー価格：</label>
         <input
           type="text"
           value={entryPrice}
           onChange={(e) => setEntryPrice(e.target.value)}
+          style={{
+            padding: '8px',
+            fontSize: '16px',
+            borderRadius: '10px',
+            border: '1px solid #ddd',
+            width: '100%'
+          }}
         />
       </div>
 
-      <div>
-        <button onClick={calculatePrices}>損切り・利確計算</button>
+      <div style={{ marginBottom: 10 }}>
+        <button 
+          onClick={calculatePrices} 
+          style={{
+            padding: '10px 20px',
+            fontSize: '16px',
+            backgroundColor: '#4CAF50',
+            color: '#fff',
+            borderRadius: '10px',
+            border: 'none',
+            cursor: 'pointer',
+            width: '100%',
+            marginBottom: '10px'
+          }}
+        >
+          損切り・利確計算
+        </button>
+      </div>
+
+      <div style={{ marginBottom: 10 }}>
+        <button
+          onClick={() => fetchATR(currencyPair)}
+          style={{
+            padding: '10px 20px',
+            fontSize: '16px',
+            backgroundColor: '#FFA500',
+            color: '#fff',
+            borderRadius: '10px',
+            border: 'none',
+            cursor: 'pointer',
+            width: '100%',
+            marginBottom: '10px'
+          }}
+        >
+          ATR更新
+        </button>
+      </div>
+
+      <div style={{ marginBottom: 10 }}>
+        <button
+          onClick={clearInputs}
+          style={{
+            padding: '10px 20px',
+            fontSize: '16px',
+            backgroundColor: '#f44336',
+            color: '#fff',
+            borderRadius: '10px',
+            border: 'none',
+            cursor: 'pointer',
+            width: '100%',
+          }}
+        >
+          入力をクリア
+        </button>
       </div>
 
       {atr && (
